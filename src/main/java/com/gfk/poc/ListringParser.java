@@ -46,11 +46,4 @@ public class ListringParser
         }
         return phoneNumber.ownText();
     }
-
-
-
-    private void log(String str)
-    {
-        System.out.println(str);
-    }
 }

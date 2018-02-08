@@ -9,6 +9,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.gfk.poc.util.Util;
+
 
 /**
  * TODO Purpose of this type, in one sentence, ending with a dot.
@@ -38,11 +40,11 @@ public class ResultListParser
     public List<String> getAllListringsInSearchResult()
     {
         final List<String> allResults = new ArrayList<>();
-        log(document.title());
+        //Util.log(document.title());
         Elements newsHeadlines = document.select(".photoLink");
         for (Element headline : newsHeadlines) {
             final String href = headline.absUrl("href");
-            log("%s", href);
+            //Util.log("%s", href);
             allResults.add(href);
         }
         return allResults;
@@ -67,15 +69,8 @@ public class ResultListParser
 
 
 
-    private void log(String str)
-    {
-        System.out.println(str);
-    }
 
 
 
-    private void log(String pattern, Object... argument)
-    {
-        System.out.println(String.format(pattern, argument));
-    }
+
 }

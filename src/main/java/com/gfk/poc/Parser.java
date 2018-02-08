@@ -3,9 +3,12 @@ package com.gfk.poc;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 /**
@@ -19,6 +22,10 @@ public class Parser
 {
     private String url;
 
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+
+    private List<Future<?>> futures = new ArrayList<>();
+
 
 
     public Parser(final String pUrl)
@@ -31,23 +38,43 @@ public class Parser
     public List<Map.Entry<String, List<String>>> getPhoneToListingsMapping()
         throws IOException
     {
-        final HashMap<String, List<String>> aggregator = new HashMap<>();
+        final ConcurrentHashMap<String, List<String>> aggregator = new ConcurrentHashMap<>();
         crawlPage(url, aggregator);
+        while (!areAllCompleted()) {
+            try {
+                Thread.sleep(200);
+            }
+            catch (InterruptedException pE) {
+                throw new Error(pE);
+            }
+        }
         return sortByPhoneNumber(aggregator);
     }
 
 
 
-    void put(final String key, final String value, Map<String, List<String>> aggregator)
+    private boolean areAllCompleted()
     {
-        if (aggregator.containsKey(key)) {
-            aggregator.get(key).add(value);
+        for (Future<?> future : futures) {
+            if (!future.isDone()) {
+                return false;
+            }
         }
-        else {
-            final ArrayList<String> urls = new ArrayList<>();
-            urls.add(value);
-            aggregator.put(key, urls);
+        return true;
+    }
+
+
+
+    private void crawlPage(final String pPageUrl, ConcurrentHashMap<String, List<String>> aggregator)
+        throws IOException
+    {
+        if (pPageUrl == null) {
+            return;
         }
+        final ResultListParserTask resultListParserTask = new ResultListParserTask(pPageUrl, aggregator);
+        final Future<?> future = executorService.submit(resultListParserTask);
+        futures.add(future);
+        crawlPage(new ResultListParser(pPageUrl).getNextPageUrl(), aggregator);
     }
 
 
@@ -59,21 +86,5 @@ public class Parser
             return Integer.compare(pRight.getValue().size(), pLeft.getValue().size());
         });
         return allPairs;
-    }
-
-
-
-    private void crawlPage(final String pPageUrl, Map<String, List<String>> aggregator)
-        throws IOException
-    {
-        if (pPageUrl == null) {
-            return;
-        }
-        for (final String url : new ResultListParser(pPageUrl).getAllListringsInSearchResult()) {
-            final String phoneNum = new ListringParser(url).extractPhoneNumber();
-            put(phoneNum, url, aggregator);
-        }
-
-        crawlPage(new ResultListParser(pPageUrl).getNextPageUrl(), aggregator);
     }
 }

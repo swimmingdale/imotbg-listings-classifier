@@ -3,10 +3,11 @@ package com.gfk.poc;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
+
+import com.gfk.poc.util.Util;
 
 
 /**
@@ -21,6 +22,9 @@ public class ParserTest
     private static final String TEST_RES_PAGE_URL = "https://www.imot.bg/pcgi/imot.cgi?act=3&slink=3gzze3&f1=1";
 
     private static final String TEST_RES_PAGE_URL_3_PAGES_LEFT =
+        "https://www.imot.bg/pcgi/imot.cgi?act=3&slink=3h0j45&f1=23";
+
+    private static final String TEST_RES_PAGE_URL_PERFORMANCE =
         "https://www.imot.bg/pcgi/imot.cgi?act=3&slink=3h0j45&f1=1";
 
 
@@ -42,15 +46,19 @@ public class ParserTest
     {
         final List<Map.Entry<String, List<String>>> phoneToListingsMapping = new Parser(TEST_RES_PAGE_URL_3_PAGES_LEFT)
             .getPhoneToListingsMapping();
-        print(phoneToListingsMapping);
+        Assertions.assertThat(phoneToListingsMapping).isNotEmpty();
+        Util.print(phoneToListingsMapping);
     }
 
 
 
-    private void print(List<Map.Entry<String, List<String>>> pEntries)
+    @Test
+    public void getPhoneToListingsMapping_performance()
+        throws IOException
     {
-        System.out.println(pEntries.stream()
-            .map(entry -> entry.getKey() + ": " + entry.getValue().stream().collect(Collectors.joining(", ")))
-            .collect(Collectors.joining(",\n ")));
+        final List<Map.Entry<String, List<String>>> phoneToListingsMapping = new Parser(TEST_RES_PAGE_URL_PERFORMANCE)
+            .getPhoneToListingsMapping();
+        Util.print(phoneToListingsMapping);
+        Util.log("Result size map: " + phoneToListingsMapping.size());
     }
 }

@@ -2,6 +2,8 @@ package com.gfk.poc.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -32,5 +34,27 @@ public class Util
             cleared = StringUtils.remove(cleared, forbiddenSymbol);
         }
         return cleared;
+    }
+
+
+
+    public static void log(String str)
+    {
+        System.out.println(str);
+    }
+
+
+
+    public static void log(String pattern, Object... argument)
+    {
+        System.out.println(String.format(pattern, argument));
+    }
+
+
+    public static void print(List<Map.Entry<String, List<String>>> pEntries)
+    {
+        System.out.println(pEntries.stream()
+            .map(entry -> entry.getKey() + ": " + entry.getValue().stream().collect(Collectors.joining(", ")))
+            .collect(Collectors.joining(",\n ")));
     }
 }

@@ -22,12 +22,15 @@ public class ResultListParser
 
     private Document document;
 
+    private final String url;
 
 
-    public ResultListParser(final String pTestResPageUrl)
+
+    public ResultListParser(final String pUrl)
         throws IOException
     {
-        document = Jsoup.connect(pTestResPageUrl).get();
+        url = pUrl;
+        document = Jsoup.connect(pUrl).get();
     }
 
 
@@ -43,6 +46,23 @@ public class ResultListParser
             allResults.add(href);
         }
         return allResults;
+    }
+
+
+
+    public String getNextPageUrl()
+    {
+        if (getAllListringsInSearchResult().size() == 0) {
+            return null;
+        }
+
+        final String idKey = "&f1=";
+        final int indexOfPageId = url.lastIndexOf(idKey);
+        final String pageIdSubstr = url.substring(indexOfPageId);
+        final String pageNumberStr = pageIdSubstr.substring(pageIdSubstr.lastIndexOf("=") + 1);
+        int pageNum = Integer.valueOf(pageNumberStr).intValue();
+        pageNum++;
+        return url.replace(pageIdSubstr, idKey + Integer.valueOf(pageNum).toString());
     }
 
 

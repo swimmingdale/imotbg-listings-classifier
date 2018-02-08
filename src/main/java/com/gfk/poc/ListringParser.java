@@ -49,19 +49,6 @@ public class ListringParser
 
 
 
-    public String getNextPageUrl()
-    {
-        final String idKey = "&f1=";
-        final int indexOfPageId = url.lastIndexOf(idKey);
-        final String pageIdSubstr = url.substring(indexOfPageId);
-        final String pageNumberStr = pageIdSubstr.substring(pageIdSubstr.lastIndexOf("=") + 1);
-        int pageNum = Integer.valueOf(pageNumberStr).intValue();
-        pageNum++;
-        return url.replace(pageIdSubstr, idKey + Integer.valueOf(pageNum).toString());
-    }
-
-
-
     private void log(String str)
     {
         System.out.println(str);

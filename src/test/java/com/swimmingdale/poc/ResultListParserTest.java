@@ -1,4 +1,4 @@
-package com.gfk.poc;
+package com.swimmingdale.poc;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.junit.Test;
  * <p/>
  * Further, arbitrarily elaborate description. HTML allowed.
  *
- * @author Ahmed Sadak, GfK
+ * @author Ahmed Sadak
  */
 public class ResultListParserTest
 {

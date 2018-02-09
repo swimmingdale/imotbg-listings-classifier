@@ -1,4 +1,4 @@
-group 'com.gfk.poc'
+group 'com.swimmingdale.poc'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'

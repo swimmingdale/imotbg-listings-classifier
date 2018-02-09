@@ -1,4 +1,4 @@
-package com.gfk.poc;
+package com.swimmingdale.poc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.gfk.poc.util.Util;
+import com.swimmingdale.poc.util.Util;
 
 
 /**
@@ -14,7 +14,7 @@ import com.gfk.poc.util.Util;
  * <p/>
  * Further, arbitrarily elaborate description. HTML allowed.
  *
- * @author Ahmed Sadak, GfK
+ * @author Ahmed Sadak
  */
 public class ResultListParserTask
     implements Runnable

@@ -1,4 +1,4 @@
-package com.gfk.poc.util;
+package com.swimmingdale.poc.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.StringUtils;
  * <p/>
  * Further, arbitrarily elaborate description. HTML allowed.
  *
- * @author Ahmed Sadak, GfK
+ * @author Ahmed Sadak
  */
 public class Util
 {

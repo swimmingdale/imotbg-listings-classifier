@@ -1,4 +1,4 @@
-package com.gfk.poc;
+package com.swimmingdale.poc;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,15 +9,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.gfk.poc.util.Util;
-
 
 /**
  * TODO Purpose of this type, in one sentence, ending with a dot.
  * <p/>
  * Further, arbitrarily elaborate description. HTML allowed.
  *
- * @author Ahmed Sadak, GfK
+ * @author Ahmed Sadak
  */
 public class ResultListParser
 {

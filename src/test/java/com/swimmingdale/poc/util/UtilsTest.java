@@ -1,4 +1,4 @@
-package com.gfk.poc.util;
+package com.swimmingdale.poc.util;
 
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.junit.Test;
  * <p/>
  * Further, arbitrarily elaborate description. HTML allowed.
  *
- * @author Ahmed Sadak, GfK
+ * @author Ahmed Sadak
  */
 public class UtilsTest
 {
